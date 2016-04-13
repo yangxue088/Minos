@@ -7,7 +7,7 @@
     <div class="am-g">
         <div class="am-panel am-panel-default">
           <div class="am-panel-hd">
-            <h3 class="am-panel-title">福利の社</h3>
+            <h3 class="am-panel-title">福利社</h3>
           </div>
           <div class="am-panel-bd minos-sorts am-text-sm">
             Minos社区是一个平等、自由的社区，并通过各种有意思的安全知识、漏洞分享，来提高每个成员。
@@ -23,7 +23,7 @@
               <tr class="row">
                 <td class="am-link-muted am-hide-sm-down">{{ time_span(post['time']) }}</td>
                 <td>
-                    {% if post.get('star') %}<span class="am-text-primary">[精华]</span>{% end %}
+                    {% if post.get('star') %}<span class="am-text-primary">【精华】</span>{% end %}
                     <a href="/public/post/{{ post['_id'] }}" >
                         {{ post['title'] }}
                     </a>
