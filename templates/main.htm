@@ -11,15 +11,15 @@
             </div>
             <div class="am-panel-bd minos-sorts">
                 {% for sort in sorts %}
-                <a href="/sort/{{ sort['_id'] }}" class="am-btn am-btn-primary am-btn-xs">{{ sort["name"] }}({{
-                    sort["article"] }})</a>
+                <a href="/sort/{{ sort['_id'] }}" class="am-btn am-btn-primary am-btn-xs">{{ sort["name"] }}</a>
                 {% end %}
 
             </div>
             <table class="am-table minos-list am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal">
                 <tr class="null am-primary">
                     <td class="am-hide-sm-down">时间</td>
-                    <td width="72%">标题</td>
+                    <td width="60%">标题</td>
+                    <td width="12%">板块</td>
                     <td width="8%" class="am-text-center am-hide-sm-down">状态</td>
                     <td class="am-text-right" width="10%">作者</td>
                 </tr>
@@ -32,6 +32,7 @@
                             {{ post['title'] }}
                         </a>
                     </td>
+                    <td>{{ post['sort']['name'] }}</td>
                     <td class="am-text-center am-hide-sm-down">
                         {% if post['charge'] and current_user["username"] not in post["buyer"] %}
                         <span class="am-badge am-badge-warning">{{ post['charge'] }}金币</span>
