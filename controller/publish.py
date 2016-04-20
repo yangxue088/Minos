@@ -75,7 +75,8 @@ class PublishHandler(BaseHandler):
         # attach file
         attach = []
         fs = motor.motor_tornado.MotorGridFS(self.db)
-        for file in self.request.files['file']:
+
+        for file in self.request.files.get('file', []):
             fs_id = yield fs.put(file['body'], filename=file['filename'])
             attach.append(fs_id)
 
