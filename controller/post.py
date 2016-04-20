@@ -1,4 +1,6 @@
 # coding=utf-8
+import motor
+
 __author__ = 'phithon'
 import re
 import time
@@ -17,7 +19,7 @@ class PostHandler(BaseHandler):
         self.topbar = ""
 
     def is_edit(self, post):
-        return post["user"] == self.current_user.get("username") and time.time() - post["time"] < 30 * 60
+        return post["user"] == self.current_user.get("username") and time.time() - post["time"] < 6 * 60 * 60
 
     def no_need_buy(self, post):
         if self.power == "admin":
@@ -75,7 +77,15 @@ class PostHandler(BaseHandler):
         }, {
             "$inc": {"view": 1}
         })
-        self.render("post.htm", post=post, user=user, is_edit=self.is_edit)
+
+        # attach
+        attach = []
+        fs = motor.motor_tornado.MotorGridFS(self.db)
+        for file_id in post.get('attach', []):
+            file = yield fs.get(file_id)
+            attach.append((file_id, file.filename))
+
+        self.render("post.htm", post=post, attach=attach, user=user, is_edit=self.is_edit)
 
     @tornado.web.asynchronous
     @gen.coroutine
@@ -139,6 +149,23 @@ class PostHandler(BaseHandler):
             "username": {"$eq": username}
         })
         raise gen.Return(user)
+
+
+class AttachHandler(BaseHandler):
+    @tornado.web.asynchronous
+    @gen.coroutine
+    def get(self, *args, **kwargs):
+        file_id = args[0]
+        fs = motor.motor_tornado.MotorGridFS(self.db)
+        file = yield fs.get(ObjectId(file_id))
+        content = yield file.read()
+
+        self.set_header("Content-Type", "application/octet-stream")
+        self.set_header("Content-Disposition", "attachment;filename=\"%s\";" % (file.filename,))
+        self.set_header("Content-Encoding", "none")
+        self.set_header("Content-Transfer-Encoding", "binary")
+        self.clear_header("Server")
+        self.write(content)
 
 
 class BuyHandler(BaseHandler):

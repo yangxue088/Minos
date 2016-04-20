@@ -6,7 +6,7 @@
 
 <div class="am-container">
     <div class="am-g">
-        <form class="am-form" id="minos-pulish" method="post">
+        <form class="am-form" id="minos-pulish" enctype="multipart/form-data" method="post">
             <div class="am-input-group am-margin-bottom" id="title-form">
               <span class="am-input-group-label">文章标题</span>
               <input type="text" name="title" class="am-form-field" >
@@ -24,6 +24,10 @@
             </div>
             {% set text = flash["article"] %}
             <textarea id="editor" name="ckeditor">{{ text }}</textarea>
+            <div class="am-padding-top"></div>
+            <div id="file_uploads">
+                <input type="file" name="file" class="am-form-field">
+            </div>
             <div class="am-padding-top"></div>
             <div class="am-g">
                 <div class="am-input-group am-u-sm-12 am-u-md-4 am-u-lg-4">

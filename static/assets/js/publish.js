@@ -45,6 +45,19 @@ $(document).ready(function(){
 		}
 		$("#minos-pulish").submit();
 	});
+	$(document).on('change', "input[name='file']", function(e){
+	    inputs = $("#file_uploads input[name='file']");
+	    var i = 0;
+	    for(; i < inputs.length; i++){
+	        input = inputs[i];
+	        if(!$(input).val()){
+	            break;
+	        }
+	    }
+	    if(i == inputs.length){
+	        $("#file_uploads").append('<input type="file" name="file" class="am-form-field">');
+	    }
+	});
 	if(window.localStorage){
 		$("#save").click(function(){
 			var text = editor.getValue();

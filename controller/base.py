@@ -153,12 +153,10 @@ class BaseHandler(SessionBaseHandler):
             i += 1
         if now > 6:
             _url = url % 1
-            _ret = u'<li><a class="am-link-muted" href="%s">首页</a></li><li class="am-disabled"><a href="#">...</a></li>%s' % (
-            _url, _ret)
+            _ret = u'<li><a class="am-link-muted" href="%s">首页</a></li><li class="am-disabled"><a href="#">...</a></li>%s' % (_url, _ret)
         if now + 5 < page:
             _url = url % page
-            _ret = u'%s<li class="am-disabled"><a href="#">...</a></li><li><a class="am-link-muted" href="%s">尾页</a></li>' % (
-            _ret, _url)
+            _ret = u'%s<li class="am-disabled"><a href="#">...</a></li><li><a class="am-link-muted" href="%s">尾页</a></li>' % (_ret, _url)
         if page <= 1:
             _ret = ''
         _ret = _pre + _ret + _end

@@ -31,6 +31,18 @@
                   <div class="am-article-bd ">
                       {% raw post["content"] %}
                   </div>
+                  {% if attach and len(attach) > 0 %}
+                  <hr class="am-article-divider am-hide-sm-down" />
+                  <div class="am-article-bd" >
+                      <ul>
+                          {% for file in attach %}
+                            <li>
+                                <a href="/attach/{{ file[0] }}">{{ file[1] }}</a>
+                            </li>
+                          {% end %}
+                      </ul>
+                  </div>
+                  {% end %}
                   <hr class="am-article-divider am-hide-sm-down" />
                   <div class="am-article-bd" >
                       <ul class="am-list am-list-static am-list-border">

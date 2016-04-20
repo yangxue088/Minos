@@ -92,7 +92,8 @@ application = tornado.web.Application([
     (r"^/message(/(\d+))?", "controller.message.MessageHandler"),
     (r"^/message/([a-f0-9]{24})", "controller.message.DetailHandler"),
     (r"^/manage/([a-z]+)(/(.*))?", "controller.dashboard.AdminHandler"),
-    (r"^/download/(.*)", "controller.download.DownloadHandler", {"path": "./download/"})
+    (r"^/download/(.*)", "controller.download.DownloadHandler", {"path": "./download/"}),
+    (r"^/attach/(.*)", "controller.post.AttachHandler")
 ], **setting)
 
 if __name__ == "__main__":
