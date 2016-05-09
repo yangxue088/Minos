@@ -39,14 +39,14 @@ class Sendemail:
 if __name__ == "__main__":
     def main():
         setting = {
-            "url": "https://api.mailgun.net/v3/domain",
-            "key": "key-xxxxx"
+            "url": "https://api.mailgun.net/v3/tjchtech.com",
+            "key": "key-b6139f5afd5b82a73a810724b263b380"
         }
         Sendemail(setting).send(
             title=u"你好，test",
             content=u"这是一封测试邮件",
-            to=u"test@qq.com",
-            orgin=u"postmaster@domain"
+            to=u"3048026713@qq.com",
+            orgin=u"postmaster@tjchtech.com"
         )
 
 
