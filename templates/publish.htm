@@ -44,11 +44,12 @@
                     <span class="am-input-group-label">到</span>
                     <input type="number" class="am-form-field" name="freeend" placeholder="2">
                   </div>
-
                 </div>
             </div>
+            <input type="checkbox" class="am-form-field" name="private">
             <div class="am-padding-top"></div>
-            <a class="am-btn am-btn-success" id="publish">立即发布</a>
+            <a class="am-btn am-btn-warning" id="publish">公开发布</a>
+            <a class="am-btn am-btn-success" id="private">个人发布</a>
             <a class="am-btn am-btn-default" id="save">临时保存</a>
             {% raw xsrf_form_html() %}
         </form>

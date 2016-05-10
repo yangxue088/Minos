@@ -50,6 +50,8 @@ class PublishHandler(BaseHandler):
         charge = intval(self.get_body_argument("charge", default=0))
         freebegin = intval(self.get_body_argument("freebegin", default=0))
         freeend = intval(self.get_body_argument("freeend", default=0))
+        private = self.get_body_argument('private', default='off')
+
         if not title:
             self.flash["article"] = content
             self.custom_error("标题不能为空哦", jump="/publish")
@@ -103,6 +105,7 @@ class PublishHandler(BaseHandler):
             "top": False,
             "lastcomment": time.time(),
             'attach': attach,
+            'private': private,
         }
         model = ArticleModel()
         if not model(article):

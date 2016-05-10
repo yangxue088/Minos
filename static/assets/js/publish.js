@@ -45,6 +45,22 @@ $(document).ready(function(){
 		}
 		$("#minos-pulish").submit();
 	});
+
+	$("#private").click(function(){
+		var title = $("[name='title']").val();
+		if(!title){
+			$("#title-form").addClass("am-form-error").addClass("am-form-feedback");
+			$("[name='title']").attr("placeholder", "标题不能为空");
+			return ;
+		}
+		$("[name='private']").attr("checked", 'checked');
+
+		if(window.localStorage){
+			window.localStorage.clear(storage_name);
+		}
+		$("#minos-pulish").submit();
+	});
+
 	$(document).on('change', "input[name='file']", function(e){
 	    inputs = $("#file_uploads input[name='file']");
 	    var i = 0;

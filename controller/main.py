@@ -15,14 +15,15 @@ class HomeHandler(BaseHandler):
         limit = 15
         page = intval(args[1])
         if not page or page <= 0: page = 1
-        cursor = self.db.article.find()
+        cursor = self.db.article.find({'$or': [{'private': None}, {'private': 'off'}]})
         cursor.sort(
             [('top', pymongo.DESCENDING), ("lastcomment", pymongo.DESCENDING), ('time', pymongo.DESCENDING)]).limit(
             limit).skip((page - 1) * limit)
         count = yield cursor.count()
         posts = yield cursor.to_list(length=limit)
         sorts = yield self.get_sort()
-        self.render("main.htm", posts=posts, sorts=sorts, page=page,
+
+        self.render("main.htm", posts=filter(lambda post: post.get('private', 'off') == 'off', posts), sorts=sorts, page=page,
                     time_span=time_span, count=count, each=limit)
 
     @gen.coroutine
