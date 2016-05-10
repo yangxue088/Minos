@@ -215,7 +215,7 @@ $(document).ready(function(){
 		window._bd_share_config={
 			"common":{
 				"bdSnsKey":{},
-				"bdText":"分享一篇来自Minos的文章",
+				"bdText":"公司论坛帖子分享",
 				"bdMini":"2",
 				"bdMiniList":false,
 				"bdPic":"",
@@ -227,6 +227,7 @@ $(document).ready(function(){
 				"bdCustomStyle": "/static/assets/css/none.css"
 			}
 		};
+
 		with(document)0[
 			(getElementsByTagName('head')[0]||body)
 				.appendChild(createElement('script'))
