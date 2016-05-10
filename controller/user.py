@@ -150,12 +150,8 @@ class UserHandler(BaseHandler):
                 self.custom_error("原始密码输入错误")
             profile["password"] = yield self.backend.submit(hash.get, password)
 
-        # check email
-        ufemail = yield self.db.member.find_one({
-            "email": profile["email"]
-        })
-        if ufemail:
-            self.custom_error("邮箱已经被人使用过啦")
+        if profile["email"].endswith('@tjchtech.com'):
+            self.custom_error("由于邮件域名问题，不能使用公司邮箱")
 
         # check user profile
         model = UserModel()
