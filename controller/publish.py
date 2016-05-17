@@ -121,9 +121,8 @@ class PublishHandler(BaseHandler):
 
             if user.get('power') >= 0 and self.settings["email"]["method"] == "mailgun" and "email" in user and user.get("allowemail"):
                 Sendemail(self.settings.get("email")).send(
-                    title=u"[重大]中央红头文件",
-                    content=u'''各省、自治区、直辖市人民政府，国务院各部委、各直属机构：<br/>为了更好地适应加快建设法治政府、全面推进依法行政的要求，国务院决定对现行行政法规、规章进行一次全面清理。经国务院同意，现就有关事项通知如下！<br/><br/>用户{}发布了重大实事文章，请速来围观!<br/><br/><a href="{}/post/{}" target="_blank">点击查看</a>'''.format(
-                        self.current_user["username"], self.settings.get("base_url"), id),
+                    title=u"论坛文章:《{}》,作者：{}".format(title, self.current_user["username"]),
+                    content=content,
                     to=user["email"]
                 )
 
