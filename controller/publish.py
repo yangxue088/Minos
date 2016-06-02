@@ -116,6 +116,9 @@ class PublishHandler(BaseHandler):
         # send mail
         users = self.db.member.find()
 
+        article_url = '{}/post/{}'.format(tornado.options.options.url, id)
+        content = "{}<br><br>{}".format('''<a href="{}" target="_blank">点击查看论坛文章</a>'''.format(article_url), content)
+
         while (yield users.fetch_next):
             user = users.next_object()
 
