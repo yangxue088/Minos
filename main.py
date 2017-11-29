@@ -2,9 +2,7 @@
 import sys
 
 import motor
-import tornado.ioloop
 import tornado.options
-import tornado.web
 import yaml
 from concurrent import futures
 
@@ -42,7 +40,8 @@ setting = {
             "httponly": True
         },
     },
-    "thread_pool": futures.ThreadPoolExecutor(4)
+    "thread_pool": futures.ThreadPoolExecutor(4),
+    "debug": True
 }
 
 # config file
@@ -80,6 +79,7 @@ application = tornado.web.Application([
     (r"^/forgetpwd", "controller.auth.ForgetpwdHandler"),
     (r"^/captcha\.png", "controller.auth.CaptchaHanlder"),
     (r"^/user/([a-z]+)(/(.*))?", "controller.user.UserHandler"),
+    (r"^/amazon/follow/([a-z]+)(/(.*))?", "controller.amazon.FollowHandler"),
     (r"^/admin/([a-z]+)?", "controller.admin.AdminHandler"),
     (r"^/publish", "controller.publish.PublishHandler"),
     (r"^/edit/([a-f0-9]{24})", "controller.publish.EditHandler"),
