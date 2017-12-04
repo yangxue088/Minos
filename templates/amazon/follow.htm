@@ -1,0 +1,83 @@
+{% extends "../base.htm" %}
+
+{% block header_title %}跟卖监控{% end %}
+{% block body %}
+{% include "../header.htm" %}
+
+<div class="am-container">
+
+    <button id="add_asin" type="button" class="am-btn am-btn-success" data-am-modal="{target: '#my-popup'}">添加ASIN</button>
+
+    <div class="am-popup" id="my-popup">
+        <div class="am-popup-inner">
+            <div class="am-popup-hd">
+                <h4 class="am-popup-title">添加ASIN</h4>
+                <span data-am-modal-close
+                      class="am-close">&times;</span>
+            </div>
+            <div class="am-popup-bd">
+                <form class="am-form" action="amazon/follow/add" method="post" id="add_form">
+                    <fieldset>
+                        <div class="am-form-group">
+                            <label for="choose_site">选择站点</label>
+                            <select id="choose_site" name='choose_site' form="add_form">
+                                <option value="www.amazon.com">美国</option>
+                                <option value="www.amazon.co.uk">英国</option>
+                                <option value="www.amazon.de">德国</option>
+                                <option value="www.amazon.fr">法国</option>
+                                <option value="www.amazon.es">西班牙</option>
+                                <option value="www.amazon.it">意大利</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+
+                            <label for="batch_asins">输入ASIN</label>
+                            <textarea class="" rows="8" id="batch_asins" name="batch_asins" form="add_form"></textarea>
+                        </div>
+
+                        <p>
+                            <button type="submit" class="am-btn am-btn-default">确定</button>
+                        </p>
+                        {% raw xsrf_form_html() %}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <table id="table" class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
+        <thead>
+        <tr>
+            <th>站点</th>
+            <th>asin</th>
+            <th>产品链接</th>
+            <th>卖家列表</th>
+            <!--<th>状态</th>-->
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for follow_product in follow_products %}
+        <tr class="row">
+            <td>{{ follow_product['site'] }}</td>
+            <td>{{ follow_product['asin'] }}</td>
+            <td><a target="_blank" href="{{ follow_product['link'] }}">产品直飞</a></td>
+            <td><a target="_blank" href="{{ follow_product['offer_link'] }}">卖家列表直飞</a></td>
+            <!--<td>{{ follow_product['status'] }}</td>-->
+            <td>
+                <button><a href="amazon/follow/detail/{{ follow_product['site'] }}/{{ follow_product['asin'] }}">查看</a></button>
+                <button class='delete_button' type="button" data-site="{{ follow_product['site'] }}"
+                        data-asin="{{ follow_product['asin'] }}">
+                    刪除
+                </button>
+            </td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
+</div>
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+<script src="{{ static_url('assets/js/follow.js') }}"></script>
+{% end %}

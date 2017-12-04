@@ -9,7 +9,7 @@ except:
     unicode = str
 
 
-class FollowProductModel(BaseModel):
+class FollowModel(BaseModel):
     __table__ = "follow_product"
     __invalid__ = {
         "username": {
@@ -19,11 +19,6 @@ class FollowProductModel(BaseModel):
             "max_length": 36,
             "min_length": 1,
             "pattern": ur"^[a-zA-Z0-9_\-\u4e00-\u9fa5]+$"
-        },
-        "name": {
-            "_name": "产品名",
-            "type": unicode,
-            "max_length": 256
         },
         "site": {
             "_name": "站点",

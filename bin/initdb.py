@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # coding=utf-8
 __author__ = 'phithon'
-import bcrypt
-import pymongo
 import sys
 import time
+
+import bcrypt
+import pymongo
 import yaml
 
 try:
@@ -43,7 +44,6 @@ def createAdmin(db, config):
 def create_index(db):
     db.member.create_index("username", unique=True)
     db.invite.create_index("code", unique=True)
-
 
 if __name__ == "__main__":
     try:

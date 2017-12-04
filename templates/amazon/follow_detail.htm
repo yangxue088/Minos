@@ -1,0 +1,57 @@
+{% extends "../base.htm" %}
+
+{% block header_title %}跟卖监控详情{% end %}
+{% block body %}
+{% include "../header.htm" %}
+
+<div class="am-container">
+
+    <table class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
+        <thead>
+        <tr>
+            <td>图片</td>
+            <td>
+                <a target="_blank" href="https://{{ site }}/dp/{{ asin }}">{{ asin }}</a>
+            </td>
+            <td>
+                <a href="amazon/follow/setting">回到设置</a>
+            </td>
+        </tr>
+        </thead>
+    </table>
+
+    <table id="table" class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
+        <thead>
+        <tr>
+            <th>监控时间</th>
+            <th>监控卖家</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for monitor in monitors %}
+        <tr class="row">
+            <td>{{ monitor['time'] }}</td>
+            {% set sellers = monitor['sellers'] %}
+            <td>
+                {% for seller in sellers %}
+                <a target='_blank' href="{{ seller['link'] }}">{{ seller['name'] }}</a>
+                {% end %}
+            </td>
+        </tr>
+        {% end %}
+        </tbody>
+    </table>
+
+    <div class="am-panel-footer">
+        {% raw pagenav(now = page, count = count, each = each,
+            url = u'amazon/follow/detail/' + site + u'/' + asin + u'?page=%d') %}
+        <div class="am-cf"></div>
+    </div>
+
+</div>
+
+{% end %}
+{% block footer_static %}
+<script src="{{ static_url('assets/js/app.js') }}"></script>
+<script src="{{ static_url('assets/js/follow.js') }}"></script>
+{% end %}
