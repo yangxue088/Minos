@@ -1,4 +1,6 @@
 # coding=utf-8
+import pymongo
+
 from model.follow import FollowModel
 from util.function import intval
 
@@ -110,18 +112,18 @@ class FollowHandler(BaseHandler):
                 "name": "MAIKE-MALL"}]}
         ]
 
-        limit = 10
+        limit = 20
         page = intval(self.get_argument("page", default=1))
         if not page or page <= 0:
             page = 1
 
-        count = 30
-
-        # cursor = self.db.article.find({
-        #     "user": username
-        # })
-        # count = yield cursor.count()
-        # cursor.sort([('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
-        # posts = yield cursor.to_list(length=limit)
+        cursor = self.db.follow_monitor.find({
+            "$and": [
+                {'site': site},
+                {'asin': asin},
+            ]})
+        count = yield cursor.count()
+        cursor.sort([('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
+        monitors = yield cursor.to_list(length=limit)
 
         self.render("amazon/follow_detail.htm", site=site, asin=asin, monitors=monitors, page=page, each=limit, count=count)

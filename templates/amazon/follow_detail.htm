@@ -31,10 +31,10 @@
         {% for monitor in monitors %}
         <tr class="row">
             <td>{{ monitor['time'] }}</td>
-            {% set sellers = monitor['sellers'] %}
+            {% set follows = monitor['follows'] %}
             <td>
-                {% for seller in sellers %}
-                <a target='_blank' href="{{ seller['link'] }}">{{ seller['name'] }}</a>
+                {% for follow in follows %}
+                <a target='_blank' href="{{ follow['link'] }}">{{ follow['name'] }}</a>
                 {% end %}
             </td>
         </tr>

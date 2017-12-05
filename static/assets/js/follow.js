@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	(function(){
 
-	    $(".delete_button").on("click", function(){
+        $(".detail_button").on("click", function(){
             button = $(this);
 
             $.ajax({
