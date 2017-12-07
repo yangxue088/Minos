@@ -1,10 +1,16 @@
 # coding=utf-8
 import json
+import shutil
+import time
 
+import os
 import pymongo
+import re
+import requests
+from lxml import html
 
 from model.follow import FollowModel
-from util.function import intval
+from util.function import intval, humantime
 
 __author__ = 'phithon'
 import tornado.web
@@ -87,6 +93,7 @@ class FollowHandler(BaseHandler):
                 follow['link'] = u'https://{}/dp/{}'.format(choose_site, batch_asin)
                 follow['offer_link'] = u'https://{}/gp/offer-listing/{}?ie=UTF8&f_all=true'.format(choose_site, batch_asin)
                 follow['status'] = u'运行中'
+                follow['image'] = unicode(self.save_image_local(self.get_image_link(follow['link'])))
 
                 model = FollowModel()
 
@@ -110,6 +117,15 @@ class FollowHandler(BaseHandler):
         if not page or page <= 0:
             page = 1
 
+        product_cursor = self.db.follow_product.find({
+            "$and": [
+                {'username': self.get_current_user()['username']},
+                {'site': site},
+                {'asin': asin},
+            ]})
+        products = yield product_cursor.to_list(1)
+        image = products[0]['image']
+
         cursor = self.db.follow_monitor.find({
             "$and": [
                 {'site': site},
@@ -123,4 +139,41 @@ class FollowHandler(BaseHandler):
             monitor['follows'] = json.loads(monitor['follows'])
             monitor['time'] = monitor['time'].strftime("%Y-%m-%d %H:%M:%S")
 
-        self.render("amazon/follow_detail.htm", site=site, asin=asin, monitors=monitors, page=page, each=limit, count=count)
+        self.render("amazon/follow_detail.htm", image=image, site=site, asin=asin, monitors=monitors, page=page, each=limit, count=count)
+
+    def get_image_link(self, url):
+        link = u'404'
+
+        r = requests.get(url)
+
+        if r.status_code == requests.codes.ok:
+            tree = html.fromstring(r.content)
+            results = tree.xpath('''//li[contains(@class, 'itemNo0')]//img/@src''')
+            link = unicode(results[0])
+            link = re.sub(r'_.+_', '_SS160_', link)
+            print 'url: {}, image: {}'.format(url, link)
+        else:
+            print 'error in get image, url: {}'.format(url)
+
+        return link
+
+    def save_image_local(self, url):
+        if url == '404':
+            return '{}/face/404.png'.format(self.settings["static_path"])
+        else:
+            now = time.time()
+            folder = "%s/%s/%s" % (self.settings["imagepath"], humantime(now, "%Y%m"),
+                                   humantime(now, "%d"))
+            if not os.path.isdir(folder):
+                os.makedirs(folder)
+
+            filename = url[url.rfind('/') + 1:]
+            image = '{}/{}'.format(folder, filename)
+
+            r = requests.get(url, stream=True)
+            if r.status_code == 200:
+                with open(image, 'wb') as f:
+                    r.raw.decode_content = True
+                    shutil.copyfileobj(r.raw, f)
+
+            return image

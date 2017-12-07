@@ -46,7 +46,12 @@ class FollowModel(BaseModel):
             "_name": "状态",
             "type": unicode,
             "max_length": 128,
-        }
+        },
+        "image": {
+            "_name": "图片",
+            "type": unicode,
+            "max_length": 128,
+        },
     }
     __msg__ = {
         "type": "%s类型错误",

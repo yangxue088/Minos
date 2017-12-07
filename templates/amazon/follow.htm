@@ -47,6 +47,7 @@
     <table id="table" class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
         <thead>
         <tr>
+            <th>图片</th>
             <th>站点</th>
             <th>asin</th>
             <th>产品链接</th>
@@ -58,6 +59,7 @@
         <tbody>
         {% for follow_product in follow_products %}
         <tr class="row">
+            <td><img src="{{ follow_product['image'] }}" height="72" width="72"></td>
             <td>{{ follow_product['site'] }}</td>
             <td>{{ follow_product['asin'] }}</td>
             <td><a target="_blank" href="{{ follow_product['link'] }}">产品直飞</a></td>
