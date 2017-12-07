@@ -84,6 +84,17 @@ class FollowHandler(BaseHandler):
             choose_site = self.get_body_argument('choose_site')
             batch_asins = self.get_body_argument('batch_asins').split('\r\n')
 
+            cursor = self.db.follow_product.find({
+                "username": username
+            })
+            count = yield cursor.count()
+            follow_products = yield cursor.to_list(count)
+            exist_asins = [follow_product['asin'] for follow_product in follow_products]
+            batch_asins = [asin for asin in batch_asins if asin not in exist_asins]
+
+            if len(batch_asins) + len(exist_asins) > 10:
+                self.custom_error('资源限制, 一个用户只能监控10个产品')
+
             for batch_asin in batch_asins:
                 follow = {}
 
