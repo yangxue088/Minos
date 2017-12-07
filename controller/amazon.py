@@ -1,4 +1,6 @@
 # coding=utf-8
+import json
+
 import pymongo
 
 from model.follow import FollowModel
@@ -103,15 +105,6 @@ class FollowHandler(BaseHandler):
         site = arg.split('/')[0]
         asin = arg.split('/')[1]
 
-        monitors = [
-            {'time': '2017-12-03 04:03:11', 'sellers': [{
-                "link": "/gp/aag/main/ref=olp_merch_name_1/146-8867169-5078512?ie=UTF8&asin=B076J5989Y&isAmazonFulfilled=1&seller=A6F0XISCOTUN4",
-                "name": "LIVEHITOP"}]},
-            {'time': '2017-12-03 04:32:45', 'sellers': [{
-                "link": "/gp/aag/main/ref=olp_merch_name_1/262-0822458-5533369?ie=UTF8&asin=B01G8BMU0M&isAmazonFulfilled=1&seller=AFA18HPUQX3LE",
-                "name": "MAIKE-MALL"}]}
-        ]
-
         limit = 20
         page = intval(self.get_argument("page", default=1))
         if not page or page <= 0:
@@ -124,6 +117,10 @@ class FollowHandler(BaseHandler):
             ]})
         count = yield cursor.count()
         cursor.sort([('time', pymongo.DESCENDING)]).limit(limit).skip((page - 1) * limit)
+
         monitors = yield cursor.to_list(length=limit)
+        for monitor in monitors:
+            monitor['follows'] = json.loads(monitor['follows'])
+            monitor['time'] = monitor['time'].strftime("%Y-%m-%d %H:%M:%S")
 
         self.render("amazon/follow_detail.htm", site=site, asin=asin, monitors=monitors, page=page, each=limit, count=count)
