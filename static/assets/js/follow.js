@@ -1,5 +1,15 @@
 $(document).ready(function(){
 	(function(){
+        onclick="javascript: window.location='amazon/follow/detail/{{ follow_product['site'] }}/{{ follow_product['asin'] }}'"
+
+        $(".detail_button").on("click", function(){
+            button = $(this);
+            site = button.attr("data-site");
+            asin = button.attr("data-asin");
+
+            link = 'amazon/follow/detail/' + site + '/' + asin;
+            window.location.href=link;
+        });
 
         $(".delete_button").on("click", function(){
             button = $(this);

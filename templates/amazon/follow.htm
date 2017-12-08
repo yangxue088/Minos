@@ -66,10 +66,11 @@
             <td><a target="_blank" href="{{ follow_product['offer_link'] }}">卖家列表直飞</a></td>
             <!--<td>{{ follow_product['status'] }}</td>-->
             <td>
-                <button><a href="amazon/follow/detail/{{ follow_product['site'] }}/{{ follow_product['asin'] }}">查看</a></button>
+                <button class='detail_button' type="button" data-site="{{ follow_product['site'] }}"
+                        data-asin="{{ follow_product['asin'] }}">查看
+                </button>
                 <button class='delete_button' type="button" data-site="{{ follow_product['site'] }}"
-                        data-asin="{{ follow_product['asin'] }}">
-                    刪除
+                        data-asin="{{ follow_product['asin'] }}">刪除
                 </button>
             </td>
         </tr>
