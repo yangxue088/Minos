@@ -1,15 +1,32 @@
---index-url http://pypi.douban.com/simple/
---extra-index-url http://mirrors.aliyun.com/pypi/simple/
---allow-external PIL
---allow-unverified PIL
-tornado>=4.1
-motor>=0.4
-redis>=2.10.3
-pymongo==2.8.0
-bcrypt>=1.1.1
-pyyaml>=3.11
-Pillow>=3.2.0
-wheezy.captcha>=0.1.44
-futures>=2.2.0
-xxtea>=0.2.1
-pycurl
+backports-abc==0.4
+backports.ssl-match-hostname==3.5.0.1
+bcrypt==2.0.0
+beautifulsoup4==4.5.1
+bs4==0.0.1
+certifi==2017.4.17
+cffi==1.5.2
+chardet==3.0.4
+config==0.3.9
+EasyProcess==0.2.3
+futures==3.0.5
+greenlet==0.4.9
+idna==2.5
+lxml==4.1.1
+motor==0.6.2
+Pillow==3.2.0
+pycparser==2.14
+pycurl==7.43.0
+pymongo==2.8
+PySocks==1.6.7
+pytesseract==0.1.7
+PyVirtualDisplay==0.2.1
+PyYAML==3.11
+redis==2.10.5
+requests==2.18.2
+selenium==2.53.2
+singledispatch==3.4.0.3
+six==1.10.0
+tornado==4.3
+urllib3==1.22
+wheezy.captcha==0.1.44
+xxtea==1.0.2
