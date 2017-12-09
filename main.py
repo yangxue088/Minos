@@ -17,6 +17,7 @@ tornado.options.parse_command_line()
 if not tornado.options.options.url:
     tornado.options.options.url = "http://%s:%d" % (tornado.options.options.host, tornado.options.options.port)
 
+# setting
 setting = {
     "base_url": tornado.options.options.url,
     "template_path": "templates",
