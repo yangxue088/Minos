@@ -11,7 +11,8 @@
         <tr>
             <td><img src="{{ image }}" height="72" width="72"></td>
             <td>
-                <a target="_blank" href="https://{{ site }}/dp/{{ asin }}">{{ asin }}</a>
+                <a target="_blank" href="https://{{ site }}/gp/offer-listing/{{ asin }}?ie=UTF8&f_all=true">{{ asin
+                    }}</a>
             </td>
             <td>
                 <a href="amazon/follow/setting">回到设置</a>
@@ -20,7 +21,8 @@
         </thead>
     </table>
 
-    <table id="table" class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
+    <table id="table"
+           class="am-table am-text-sm am-table-bordered am-table-hover am-scrollable-horizontal am-table-striped">
         <thead>
         <tr>
             <th>监控时间</th>
@@ -44,7 +46,7 @@
 
     <div class="am-panel-footer">
         {% raw pagenav(now = page, count = count, each = each,
-            url = u'amazon/follow/detail/' + site + u'/' + asin + u'?page=%d') %}
+        url = u'amazon/follow/detail/' + site + u'/' + asin + u'?page=%d') %}
         <div class="am-cf"></div>
     </div>
 

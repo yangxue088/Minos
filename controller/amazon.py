@@ -89,8 +89,9 @@ class FollowHandler(BaseHandler):
             })
             count = yield cursor.count()
             follow_products = yield cursor.to_list(count)
-            exist_asins = [follow_product['asin'] for follow_product in follow_products]
-            batch_asins = [asin for asin in batch_asins if asin not in exist_asins]
+            exist_asins = [follow_product['link'] for follow_product in follow_products]
+            batch_asins = [asin for asin in batch_asins if
+                           u'https://{}/dp/{}'.format(choose_site, asin) not in exist_asins]
 
             if len(batch_asins) + len(exist_asins) > 10:
                 self.custom_error('资源限制, 一个用户只能监控10个产品')
@@ -102,7 +103,8 @@ class FollowHandler(BaseHandler):
                 follow['site'] = choose_site
                 follow['asin'] = batch_asin
                 follow['link'] = u'https://{}/dp/{}'.format(choose_site, batch_asin)
-                follow['offer_link'] = u'https://{}/gp/offer-listing/{}?ie=UTF8&f_all=true'.format(choose_site, batch_asin)
+                follow['offer_link'] = u'https://{}/gp/offer-listing/{}?ie=UTF8&f_all=true'.format(choose_site,
+                                                                                                   batch_asin)
                 follow['status'] = u'运行中'
                 follow['image'] = unicode(self.save_image_local(self.get_image_link(follow['link'])))
 
@@ -150,7 +152,8 @@ class FollowHandler(BaseHandler):
             monitor['follows'] = json.loads(monitor['follows'])
             monitor['time'] = monitor['time'].strftime("%Y-%m-%d %H:%M:%S")
 
-        self.render("amazon/follow_detail.htm", image=image, site=site, asin=asin, monitors=monitors, page=page, each=limit, count=count)
+        self.render("amazon/follow_detail.htm", image=image, site=site, asin=asin, monitors=monitors, page=page,
+                    each=limit, count=count)
 
     def get_image_link(self, url):
         link = u'404'
