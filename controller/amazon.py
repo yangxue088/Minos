@@ -1,4 +1,5 @@
 # coding=utf-8
+import datetime
 import json
 import shutil
 import time
@@ -105,8 +106,9 @@ class FollowHandler(BaseHandler):
                 follow['link'] = u'https://{}/dp/{}'.format(choose_site, batch_asin)
                 follow['offer_link'] = u'https://{}/gp/offer-listing/{}?ie=UTF8&f_all=true'.format(choose_site,
                                                                                                    batch_asin)
-                follow['status'] = u'运行中'
+                follow['status'] = u'green'
                 follow['image'] = unicode(self.save_image_local(self.get_image_link(follow['link'])))
+                follow['check_time'] = datetime.datetime(2000, 1, 1)
 
                 model = FollowModel()
 

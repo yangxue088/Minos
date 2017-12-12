@@ -1,4 +1,6 @@
 # coding=utf-8
+import datetime
+
 __author__ = 'phithon'
 from model.base import BaseModel
 
@@ -51,6 +53,10 @@ class FollowModel(BaseModel):
             "_name": "图片",
             "type": unicode,
             "max_length": 128,
+        },
+        "check_time": {
+            "_name": "检查时间",
+            "type": datetime.datetime,
         },
     }
     __msg__ = {
